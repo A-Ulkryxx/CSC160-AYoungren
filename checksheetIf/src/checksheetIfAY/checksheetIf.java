@@ -1,4 +1,11 @@
-package checksheetIf;
+/*
+Austin Youngren
+If Statement Check Sheet
+Date: 10/5/2021
+This program is intended to take 3 user inputs and organize them in numeric order.
+Program also tells you which is the higher value of numOne and numTwo.
+*/
+package checksheetIfAY;
 
 import java.util.Scanner;
 
@@ -13,11 +20,11 @@ public class checksheetIf {
 		int numThree;
 		
 		System.out.println("Please enter first number");
-		numOne = input.nextInt();
+		numOne = (int) input.nextInt();
 		System.out.println("Please enter second number");
-		numTwo = input.nextInt();
+		numTwo = (int) input.nextInt();
 		System.out.println("Please enter third number");
-		numThree = input.nextInt();
+		numThree = (int) input.nextInt();
 		
 		if (numOne < numTwo)
 		{
@@ -28,32 +35,31 @@ public class checksheetIf {
 			System.out.println("Number 1 is greater than number 2.");
 		}
 		
-		
-	
-		if ((numTwo < numThree) && (numOne > numTwo))
+		if ((numOne < numTwo) && (numTwo < numThree))  //Data Values: 1,8,9. Used in every possible order for testing.
 			{
 				System.out.println("Numeric order is " + numOne + ", " + numTwo + ", " + numThree);
 			}
-		else if ((numThree < numTwo) && (numOne > numThree))
+		else if ((numOne < numThree) && (numThree < numTwo))
 			{
 				System.out.println("Number order is " + numOne + ", " + numThree + ", " + numTwo);
 			}
-		else if ((numThree < numOne) && (numOne > numTwo))
+		else if ((numThree < numOne) && (numOne < numTwo))
 			{
 				System.out.println("Number order is " + numThree + ", " + numOne + ", " + numTwo);
 			}
-		else if ((numOne < numThree) && (numTwo < numOne))
+		else if ((numTwo < numOne) && (numOne < numThree))
 			{
 				System.out.println("Numeric order is " + numTwo + ", " + numOne + ", " + numThree);
 			}
-		else if ((numThree < numOne) && (numTwo > numThree))
+		else if ((numTwo < numThree) && (numThree < numOne))
 			{
 				System.out.println("Number order is " + numTwo + ", " + numThree + ", " + numOne);
 			}
-		else if (numThree < numTwo)
+		else 
 			{
 				System.out.println("Number order is " + numThree + ", " + numTwo + ", " + numOne);
 			}
 	}
 
 }
+// Problems: None
