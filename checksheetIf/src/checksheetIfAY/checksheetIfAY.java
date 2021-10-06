@@ -9,22 +9,24 @@ package checksheetIfAY;
 
 import java.util.Scanner;
 
-public class checksheetIf {
+public class checksheetIfAY {
 
 	public static void main(String[] args) {
 		
 		Scanner input;
 		input = new Scanner(System.in);
-		int numOne;
-		int numTwo;
-		int numThree;
+		String numOne;
+		String numTwo;
+		String numThree;
+		
 		
 		System.out.println("Please enter first number");
-		numOne = (int) input.nextInt();
+		numOne = input.nextLine().charAt(0);
 		System.out.println("Please enter second number");
-		numTwo = (int) input.nextInt();
+		numTwo = input.nextLine().charAt(0);
 		System.out.println("Please enter third number");
-		numThree = (int) input.nextInt();
+		numThree = input.nextLine().charAt(0);
+			
 		
 		if (numOne < numTwo)
 		{
