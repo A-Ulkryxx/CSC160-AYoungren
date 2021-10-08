@@ -10,10 +10,10 @@ public class checkSheetLoopAY {
 		
 		Scanner input;
 		input = new Scanner(System.in);
-		int bactAmount; // amount of bacteria
-		int enteredSamples; // number of samples
-		int numSample; // counts samples entered
-		int bactTotal; // Total bacteria
+		float bactAmount; // amount of bacteria
+		float enteredSamples; // number of samples
+		float numSample; // counts samples entered
+		float bactTotal; // Total bacteria
 		
 		numSample = 0;
 		bactTotal = 0;
