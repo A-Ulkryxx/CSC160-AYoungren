@@ -26,11 +26,14 @@ public class GuessingGameAY6 {
 		int answer;             // randomly generated number
 		int score;          // User's score in a single game
 		double totalScore = 0;  // User's score of all games
-		char playAgain;         // Holds the choice to play again
+		char playAgain;         // User's choice to play again
 		int game = 0;           // keeps track of which game user is playing
 		double averageScore;    //average points user scored per game
 		int lowRange;        //User's input for the low range of random number
 		int highRange;       // User's input for the high range of random number
+		
+		Random randGen;		// Sets up random number generator
+		randGen = new Random(); 	// starts random number generator
 		
 		System.out.println("Would you like to play a game?");
 		playAgain = input.next().charAt(0); 
@@ -38,25 +41,23 @@ public class GuessingGameAY6 {
 			//Do-while loop to ensure the range is valid
 		do  
 		{
-		System.out.println("What range would you like to play in?");
+			System.out.println("What range would you like to play in?");
 		
-		System.out.print("Bottom Range: "); 
-		lowRange = input.nextInt();        // Allows user to enter in the bottom of the range they want to guess
-		System.out.println("High Range: ");
-		highRange = input.nextInt();       // Allows user to enter in the top of the range they want to guess
+			System.out.print("Bottom Range: "); 
+			lowRange = input.nextInt();        // Allows user to enter in the bottom of the range they want to guess
+			System.out.println("High Range: ");
+			highRange = input.nextInt();       // Allows user to enter in the top of the range they want to guess
 		
-		if (lowRange > highRange)
-		{
-			System.out.println("invalid entry");
-		}
-		else {;}
+			if (lowRange > highRange)
+			{
+				System.out.println("invalid entry");
+			}
+			else {;}
 		
 		}while (lowRange > highRange);
 		
 		while (playAgain == 'y') 	
 		{
-			Random randGen;		// Sets up random number generator
-			randGen = new Random(); 	// starts random number generator
 			answer = randGen.nextInt(highRange - lowRange + 1) + lowRange; 	// Formula is (high - low + 1) + low
 			
 			score = 5;
@@ -70,7 +71,7 @@ public class GuessingGameAY6 {
 				//Loop to repeat guessing until guess matches answer
 			while (guess != answer) 
 			{
-				if (score >= 0) 
+				if (score > 0) 
 				{
 					score = score - 1;
 					System.out.println("Your score is: " + score);   
@@ -84,7 +85,7 @@ public class GuessingGameAY6 {
 				}
 				else    
 				{
-				System.out.println("Your guess is to low"); 
+					System.out.println("Your guess is to low"); 
 				}
 			
 				System.out.println("Guess again.");
@@ -111,4 +112,4 @@ public class GuessingGameAY6 {
 	}
 
 }
-// Problems: No Problems
+// Problems: None
