@@ -20,8 +20,8 @@ public class Mancala2AY
 
 	/*
 	 * Description: Print out line of stars
-	 * 
 	 * @param numStars - Amount of stars to output in a line return type void
+	 * @return: None
 	 */
 	public static void makeSolidLine( int numStars )
 	{
@@ -38,30 +38,30 @@ public class Mancala2AY
 
 	/*
 	 * Description: Print out dotted line of stars
-	 * 
 	 * @param: None
+	 * @return: None
 	 */
 	public static void makeDottedLine( )
 	{
-		int lineCount; // LCV
+		int spaceCount; // LCV
 		int starCount; // LCV
-		lineCount = 0;
+		spaceCount = 0;
 		starCount = 0;
 
-		while ( starCount < 9 )
+		while ( starCount < 8 )
 		{
 			System.out.print ( "*" );
 			starCount++;
-			lineCount = 0;
+			spaceCount = 0;
 
-			while ( ( lineCount < 6 ) && ( starCount < 9 ) )
+			while ( ( spaceCount < 6 ) )
 			{
 				System.out.print ( " " );
-				lineCount++;
+				spaceCount++;
 			} // end of nested lineCount loop
 
 		} // end of starCount loop
-		System.out.println ( "" );
+		System.out.println ( "*" );
 
 	}// end of makeDottedLine
 
