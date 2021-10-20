@@ -1,21 +1,23 @@
 /* Austin Youngren
- * Mancala 2
- * 10/20/21
+ * Mancala 3
+ * 10/22/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
-public class Mancala2AY
+public class Mancala3AY
 {
 
 	public static void main( String[ ] args )
 	{
-		int numStars; // Amount of stars to output in a line
+	/*	int numStars; // Amount of stars to output in a line
 		numStars = 3;
 		makeSolidLine ( numStars );
 		System.out.println ( "" );
-		makeSolidLine ( 10 );
+		makeSolidLine ( 57 );
 		System.out.println ( "" );
 		makeDottedLine ( );
+	*/ 
+		showBoard();
 	} // end of main
 
 	/*
@@ -64,6 +66,37 @@ public class Mancala2AY
 		System.out.println ( "*" );
 
 	}// end of makeDottedLine
-
+	
+	/*
+	 * Description: produces the outline of the board
+	 * @param: None
+	 * @return: None
+	 */
+	public static void showBoard( )
+	{
+		int dottedLine = 0;//LCV
+		
+		makeSolidLine(57);
+		System.out.println ( );
+		
+		while (dottedLine < 5)
+		{
+			makeDottedLine();
+			dottedLine++;
+		}
+		
+		makeSolidLine(57); //FIXME: needs open spaces in first and last column
+		System.out.println();
+		dottedLine = 0;
+		
+		while (dottedLine < 5)
+		{
+			makeDottedLine();
+			dottedLine++;
+		}
+	
+		makeSolidLine(57);
+	}
+	
 }
 // Problems: None
