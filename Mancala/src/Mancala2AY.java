@@ -52,16 +52,11 @@ public class Mancala2AY
 		{
 			System.out.print ( "*" );
 			starCount++;
+			lineCount = 0;
 
-			if ( starCount < 9 ) // Prevents spaces after last star
+			while ( ( lineCount < 6 ) && ( starCount < 9 ) )
 			{
-				lineCount = 0;
-			}
-			else{;}
-
-			while ( lineCount < 1 )
-			{
-				System.out.print ( "      " );
+				System.out.print ( " " );
 				lineCount++;
 			} // end of nested lineCount loop
 
