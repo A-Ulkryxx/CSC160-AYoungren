@@ -9,14 +9,6 @@ public class Mancala3AY
 
 	public static void main( String[ ] args )
 	{
-	/*	int numStars; // Amount of stars to output in a line
-		numStars = 3;
-		makeSolidLine ( numStars );
-		System.out.println ( "" );
-		makeSolidLine ( 57 );
-		System.out.println ( "" );
-		makeDottedLine ( );
-	*/ 
 		showBoard();
 	} // end of main
 
@@ -81,22 +73,51 @@ public class Mancala3AY
 		
 		while (dottedLine < 5)
 		{
+			
 			makeDottedLine();
 			dottedLine++;
-		}
 		
-		makeSolidLine(57); //FIXME: needs open spaces in first and last column
-		System.out.println();
+		}
+		System.out.print ( "*      " ); //left side bar numbers will go here
+		makeSolidLine(43); 
+		System.out.println( "      *" );//right side bar numbers will go here
 		dottedLine = 0;
 		
 		while (dottedLine < 5)
 		{
+			
 			makeDottedLine();
 			dottedLine++;
+				
+		
 		}
 	
 		makeSolidLine(57);
-	}
+	}// end of showBoard
 	
+	/*
+	 * Description: prints out top row of numbers
+	 * @param:None(yet)
+	 * @return: none
+	 */
+	public static void showTopRowNumbers()
+	{
+		int topNums = 0;
+		
+		
+	}// end of showTopRowNumbers
+	
+	/*
+	 * Description: prints out bottom row of numbers
+	 * @param:None(yet)
+	 * @return: none
+	 */
+	public static void showBottomeRowNumbers()
+	{
+		int bottomNums = 0;
+		
+		
+	}// end of showBottomNumbers
+		
 }
 // Problems: None
