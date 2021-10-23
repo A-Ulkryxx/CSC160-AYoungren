@@ -9,7 +9,7 @@ public class Mancala3AY
 
 	public static void main( String[ ] args )
 	{
-		showBoard();
+		showBoard ( );
 	} // end of main
 
 	/*
@@ -27,7 +27,6 @@ public class Mancala3AY
 			System.out.print ( "*" );
 			starCount++;
 		} // end of loop
-
 	} // end of makeSolidLine
 
 	/*
@@ -56,9 +55,8 @@ public class Mancala3AY
 
 		} // end of starCount loop
 		System.out.println ( "*" );
-
 	}// end of makeDottedLine
-	
+
 	/*
 	 * Description: produces the outline of the board
 	 * @param: None
@@ -67,69 +65,71 @@ public class Mancala3AY
 	public static void showBoard( )
 	{
 		int dottedLine = 0;//LCV
-		
-		makeSolidLine(57);
+
+		makeSolidLine ( 57 );
 		System.out.println ( );
-		makeDottedLine();
-		showTopRowNumbers();
-	
-		while (dottedLine < 3)
+		makeDottedLine ( );
+		showTopRowNumbers ( );
+
+		while ( dottedLine < 3 )
 		{
-			makeDottedLine();
+			makeDottedLine ( );
 			dottedLine++;
 		}
-		
-		System.out.printf ( "*  13  "); 
-		makeSolidLine(43); 
-		System.out.println( "  6   *");
-		makeDottedLine();
-		makeDottedLine();
-		showBottomeRowNumbers();
+
+		System.out.printf ( "*%4d  ", 13 );
+		makeSolidLine ( 43 );
+		System.out.printf ( "%4d  *\n", 6 );
+		makeDottedLine ( );
+		makeDottedLine ( );
+		showBottomeRowNumbers ( );
 		dottedLine = 0;
-		
-		while (dottedLine < 3)
+
+		while ( dottedLine < 3 )
 		{
-			makeDottedLine();
+			makeDottedLine ( );
 			dottedLine++;
 		}
-	
-		makeSolidLine(57);
+
+		makeSolidLine ( 57 );
 	}// end of showBoard
-	
+
 	/*
 	 * Description: prints out top row of numbers
 	 * @param:None
 	 * @return: none
 	 */
-	public static void showTopRowNumbers()
+	public static void showTopRowNumbers( )
 	{
 		int topNums = 0; // number within columns of top row
-		System.out.print( "*      ");
-		while (topNums< 6)
+		System.out.print ( "*      " );
+		while ( topNums < 6 )
 		{
 			System.out.printf ( "*%4d  ", topNums );
 			topNums++;
 		}
-		System.out.println ("*      *" );
-		
+		System.out.println ( "*      *" );
+
 	}// end of showTopRowNumbers
-	
+
 	/*
 	 * Description: prints out bottom row of numbers
 	 * @param:None
 	 * @return: none
 	 */
-	public static void showBottomeRowNumbers()
+	public static void showBottomeRowNumbers( )
 	{
 		int bottomNums = 12;//number within columns of bottom row
-		System.out.print( "*      ");
-		while (bottomNums > 6)
+		System.out.print ( "*      " );
+		while ( bottomNums > 6 )
 		{
 			System.out.printf ( "*%4d  ", bottomNums );
 			bottomNums--;
 		}
-		System.out.println ("*      *" );
-		
+		System.out.println ( "*      *" );
+
 	}// end of showBottomNumbers		
 }
-// Problems: making spaces after variables in print f statements without using spaces
+
+// Problems: None
+
