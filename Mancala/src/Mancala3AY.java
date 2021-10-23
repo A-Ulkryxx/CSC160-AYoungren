@@ -70,26 +70,27 @@ public class Mancala3AY
 		
 		makeSolidLine(57);
 		System.out.println ( );
-		
-		while (dottedLine < 5)
+		makeDottedLine();
+		showTopRowNumbers();
+	
+		while (dottedLine < 3)
 		{
-			
 			makeDottedLine();
 			dottedLine++;
-		
 		}
-		System.out.print ( "*      " ); //left side bar numbers will go here
+		
+		System.out.printf ( "*  13  "); 
 		makeSolidLine(43); 
-		System.out.println( "      *" );//right side bar numbers will go here
+		System.out.println( "  6   *");
+		makeDottedLine();
+		makeDottedLine();
+		showBottomeRowNumbers();
 		dottedLine = 0;
 		
-		while (dottedLine < 5)
+		while (dottedLine < 3)
 		{
-			
 			makeDottedLine();
 			dottedLine++;
-				
-		
 		}
 	
 		makeSolidLine(57);
@@ -97,27 +98,38 @@ public class Mancala3AY
 	
 	/*
 	 * Description: prints out top row of numbers
-	 * @param:None(yet)
+	 * @param:None
 	 * @return: none
 	 */
 	public static void showTopRowNumbers()
 	{
-		int topNums = 0;
-		
+		int topNums = 0; // number within columns of top row
+		System.out.print( "*      ");
+		while (topNums< 6)
+		{
+			System.out.printf ( "*%4d  ", topNums );
+			topNums++;
+		}
+		System.out.println ("*      *" );
 		
 	}// end of showTopRowNumbers
 	
 	/*
 	 * Description: prints out bottom row of numbers
-	 * @param:None(yet)
+	 * @param:None
 	 * @return: none
 	 */
 	public static void showBottomeRowNumbers()
 	{
-		int bottomNums = 0;
+		int bottomNums = 12;//number within columns of bottom row
+		System.out.print( "*      ");
+		while (bottomNums > 6)
+		{
+			System.out.printf ( "*%4d  ", bottomNums );
+			bottomNums--;
+		}
+		System.out.println ("*      *" );
 		
-		
-	}// end of showBottomNumbers
-		
+	}// end of showBottomNumbers		
 }
-// Problems: None
+// Problems: making spaces after variables in print f statements without using spaces
