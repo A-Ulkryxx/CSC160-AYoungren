@@ -1,10 +1,10 @@
 /* Austin Youngren
- * Mancala 4
+ * Mancala 5
  * 10/26/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
-public class Mancala4AY
+public class Mancala5AY
 {
 	static final int NUM_BINS = 14;
 
@@ -17,7 +17,7 @@ public class Mancala4AY
 		startingTestArray ( beadArray );
 		//startingArray ( beadArray );
 		printArray ( beadArray );
-		//showBoard ( );
+		showBoard ( beadArray );
 	} // end of main
 
 	/*
@@ -34,7 +34,7 @@ public class Mancala4AY
 		{
 			System.out.print ( "*" );
 			starCount++;
-		} // end of loop
+		}
 	} // end of makeSolidLine
 
 	/*
@@ -59,7 +59,7 @@ public class Mancala4AY
 			{
 				System.out.print ( " " );
 				spaceCount++;
-			} // end of nested lineCount loop
+			}
 
 		} // end of starCount loop
 		System.out.println ( "*" );
@@ -67,38 +67,28 @@ public class Mancala4AY
 
 	/*
 	 * Description: produces the outline of the board
-	 * @param: None
+	 * @param: beadArray (passes number of beads in each bin to various methods)
 	 * @return: None
 	 */
-	public static void showBoard( )
+	public static void showBoard( int[ ] beadArray )
 	{
-		int dottedLine = 0;//LCV
-
 		makeSolidLine ( 57 );
 		System.out.println ( );
 		makeDottedLine ( );
 		showTopRowNumbers ( );
-
-		while ( dottedLine < 3 )
-		{
-			makeDottedLine ( );
-			dottedLine++;
-		}
+		makeDottedLine ( );
+		showTopBins ( beadArray );
+		makeDottedLine ( );
 
 		System.out.printf ( "*%4d  ", 13 );
 		makeSolidLine ( 43 );
 		System.out.printf ( "%4d  *\n", 6 );
-		makeDottedLine ( );
+
 		makeDottedLine ( );
 		showBottomeRowNumbers ( );
-		dottedLine = 0;
-
-		while ( dottedLine < 3 )
-		{
-			makeDottedLine ( );
-			dottedLine++;
-		}
-
+		makeDottedLine ( );
+		showBottomBins ( beadArray );
+		makeDottedLine ( );
 		makeSolidLine ( 57 );
 	}// end of showBoard
 
@@ -135,35 +125,66 @@ public class Mancala4AY
 			bottomNums--;
 		}
 		System.out.println ( "*      *" );
+	}// end of showBottomNumbers	
 
-	}// end of showBottomNumbers		
+	/*
+	 * Description: prints out array numbers for bins zero through five
+	 * @param: beadArray(number of beads in each top bin)
+	 * @return: none
+	 */
+	public static void showTopBins( int[ ] beadArray )
+	{
+		int i; //LCV
+		System.out.print ( "*      " );
+		for ( i = 0; i < 6; i++ )
+		{
+			System.out.printf ( "*%4d  ", beadArray[ i ] );
+
+		}
+		System.out.println ( "*      *" );
+	}// end of showTopBins
+
+	/*
+	 * Description: prints out array numbers for bins six through thirteen
+	 * @param: beadArray (number of beads in each bottom and side bin)
+	 * @return: none
+	 */
+	public static void showBottomBins( int[ ] beadArray )
+	{
+		int i; // LCV
+		for ( i = 13; i > 5; i-- )
+		{
+			System.out.printf ( "*%4d  ", beadArray[ i ] );
+		}
+		System.out.println ( "*" );
+	}// end of showBottomBins
 
 	/*
 	 * Description: initializes elements for testing/debugging purposes
-	 * @param: beadArray
+	 * @param: beadArray (tests number of beads in each bin)
 	 * @return: none
 	 */
 	public static void startingTestArray( int[ ] beadArray )
 	{
-		beadArray[ 0 ] = 10;
-		beadArray[ 1 ] = 5;
-		beadArray[ 2 ] = 1;
-		beadArray[ 3 ] = 7;
-		beadArray[ 4 ] = 10;
-		beadArray[ 5 ] = 5;
-		beadArray[ 6 ] = 1;
+		beadArray[ 0 ] = 25;
+		beadArray[ 1 ] = 10;
+		beadArray[ 2 ] = 6;
+		beadArray[ 3 ] = 3;
+		beadArray[ 4 ] = 41;
+		beadArray[ 5 ] = 55;
+		beadArray[ 6 ] = 66;
 		beadArray[ 7 ] = 7;
-		beadArray[ 8 ] = 48;
-		beadArray[ 9 ] = 5;
-		beadArray[ 10 ] = 9;
-		beadArray[ 11 ] = 4;
-		beadArray[ 12 ] = 10;
-		beadArray[ 13 ] = 5;
+		beadArray[ 8 ] = 87;
+		beadArray[ 9 ] = 98;
+		beadArray[ 10 ] = 10;
+		beadArray[ 11 ] = 11;
+		beadArray[ 12 ] = 12;
+		beadArray[ 13 ] = 13;
 	}
 
 	/*
 	 * Description: prints the bead array in a line
-	 * @param: beadArray
+	 * @param: beadArray (number of beads in each bin)
 	 * @return: none
 	 */
 	public static void printArray( int[ ] beadArray )
@@ -184,7 +205,7 @@ public class Mancala4AY
 
 	/*
 	 * Description: initializes elements in beadArray
-	 * @param: beadArray
+	 * @param: beadArray(number of starting beads in each bin)
 	 * @return: none
 	 */
 	public static void startingArray( int[ ] beadArray )
@@ -198,7 +219,6 @@ public class Mancala4AY
 		beadArray[ 6 ] = 0;
 		beadArray[ 13 ] = 0;
 	}
-
 }
 
 // Problems: None
