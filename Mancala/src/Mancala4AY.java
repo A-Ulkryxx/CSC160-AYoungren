@@ -1,15 +1,23 @@
 /* Austin Youngren
- * Mancala 3
- * 10/22/21
+ * Mancala 4
+ * 10/26/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
-public class Mancala3AY
+public class Mancala4AY
 {
+	static final int NUM_BINS = 14;
 
 	public static void main( String[ ] args )
 	{
-		showBoard ( );
+		int[ ] beadArray; //number of beads in each bin
+
+		beadArray = new int[ NUM_BINS ];
+
+		startingTestArray ( beadArray );
+		//startingArray ( beadArray );
+		printArray ( beadArray );
+		//showBoard ( );
 	} // end of main
 
 	/*
@@ -129,7 +137,68 @@ public class Mancala3AY
 		System.out.println ( "*      *" );
 
 	}// end of showBottomNumbers		
+
+	/*
+	 * Description: initializes elements for testing/debugging purposes
+	 * @param: beadArray
+	 * @return: none
+	 */
+	public static void startingTestArray( int[ ] beadArray )
+	{
+		beadArray[ 0 ] = 10;
+		beadArray[ 1 ] = 5;
+		beadArray[ 2 ] = 1;
+		beadArray[ 3 ] = 7;
+		beadArray[ 4 ] = 10;
+		beadArray[ 5 ] = 5;
+		beadArray[ 6 ] = 1;
+		beadArray[ 7 ] = 7;
+		beadArray[ 8 ] = 48;
+		beadArray[ 9 ] = 5;
+		beadArray[ 10 ] = 9;
+		beadArray[ 11 ] = 4;
+		beadArray[ 12 ] = 10;
+		beadArray[ 13 ] = 5;
+	}
+
+	/*
+	 * Description: prints the bead array in a line
+	 * @param: beadArray
+	 * @return: none
+	 */
+	public static void printArray( int[ ] beadArray )
+	{
+		int i; //LCV
+		for ( i = 0; i < NUM_BINS; i++ )
+		{
+			System.out.printf ( "%3d", beadArray[ i ] );
+			if ( i == 6 )
+			{
+				System.out.printf ( "   | " );
+			}
+
+		}
+		System.out.println ( );
+		System.out.println ( );
+	}
+
+	/*
+	 * Description: initializes elements in beadArray
+	 * @param: beadArray
+	 * @return: none
+	 */
+	public static void startingArray( int[ ] beadArray )
+	{
+		int i; //LCV
+
+		for ( i = 0; i < NUM_BINS; i++ )
+		{
+			beadArray[ i ] = 4;
+		}
+		beadArray[ 6 ] = 0;
+		beadArray[ 13 ] = 0;
+	}
+
 }
 
 // Problems: None
-
