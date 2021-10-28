@@ -1,10 +1,10 @@
 /* Austin Youngren
- * Mancala 5
- * 10/26/21
+ * Mancala 6
+ * 10/27/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
-public class Mancala5AY
+public class Mancala6AY
 {
 	static final int NUM_BINS = 14;
 
@@ -18,7 +18,67 @@ public class Mancala5AY
 		//startingArray ( beadArray );
 		printArray ( beadArray );
 		showBoard ( beadArray );
+		System.out.println ( gameOverCheck ( beadArray ) );
+		System.out.println ( );
+
 	} // end of main
+
+	/*
+	 * Description: Checks the remaining beads in top and bottom bins to decide if the game ends
+	 * @param: beadArray - number of beads in each bin
+	 * @return: winner: game ending outcome (player win(1 or 2), tie(0), or keep playing(-1)
+	 */
+	public static int gameOverCheck( int[ ] beadArray )
+	{
+		int winner;// game decision
+		int playerOne = 0; //beads on player one's side
+		int playerTwo = 0; //beads on player two's side
+		int i; //LCV
+		int j;//LCV
+
+			//for loops check respective player bins
+		for ( i = 0; i < 6; i++ )
+		{
+			playerOne = playerOne + beadArray[ i ];
+		}
+		for ( j = 12; j > 6; j-- )
+		{
+			playerTwo = playerTwo + beadArray[ j ];
+		}
+
+			//decides which player is awarded left over beads
+		if ( ( playerOne == 0 ) && ( playerTwo != 0 ) )
+		{
+			beadArray[ 6 ] = beadArray[ 6 ] + playerTwo;
+		}
+		else if ( ( playerTwo == 0 ) && ( playerOne != 0 ) )
+		{
+			beadArray[ 13 ] = beadArray[ 13 ] + playerOne;
+		}
+		else
+		{
+			;
+		}
+
+			//checks side bins for winner
+		if ( beadArray[ 6 ] == beadArray[ 13 ] )
+		{
+			winner = 0;
+		}
+		else if ( beadArray[ 6 ] > beadArray[ 13 ] )
+		{
+			winner = 1;
+		}
+		else if ( beadArray[ 13 ] > beadArray[ 6 ] )
+		{
+			winner = 2;
+		}
+		else
+		{
+			winner = -1;
+		}
+		return winner;
+	}//end of gameOverCheck
 
 	/*
 	 * Description: Print out line of stars
@@ -60,7 +120,6 @@ public class Mancala5AY
 				System.out.print ( " " );
 				spaceCount++;
 			}
-
 		} // end of starCount loop
 		System.out.println ( "*" );
 	}// end of makeDottedLine
@@ -90,6 +149,7 @@ public class Mancala5AY
 		showBottomBins ( beadArray );
 		makeDottedLine ( );
 		makeSolidLine ( 57 );
+		System.out.println ( );
 	}// end of showBoard
 
 	/*
@@ -107,7 +167,6 @@ public class Mancala5AY
 			topNums++;
 		}
 		System.out.println ( "*      *" );
-
 	}// end of showTopRowNumbers
 
 	/*
@@ -166,20 +225,20 @@ public class Mancala5AY
 	 */
 	public static void startingTestArray( int[ ] beadArray )
 	{
-		beadArray[ 0 ] = 25;
-		beadArray[ 1 ] = 10;
-		beadArray[ 2 ] = 6;
-		beadArray[ 3 ] = 3;
-		beadArray[ 4 ] = 41;
-		beadArray[ 5 ] = 55;
-		beadArray[ 6 ] = 66;
-		beadArray[ 7 ] = 7;
-		beadArray[ 8 ] = 87;
-		beadArray[ 9 ] = 98;
-		beadArray[ 10 ] = 10;
-		beadArray[ 11 ] = 11;
-		beadArray[ 12 ] = 12;
-		beadArray[ 13 ] = 13;
+		beadArray[ 0 ] = 0;
+		beadArray[ 1 ] = 0;
+		beadArray[ 2 ] = 0;
+		beadArray[ 3 ] = 5;
+		beadArray[ 4 ] = 0;
+		beadArray[ 5 ] = 0;
+		beadArray[ 6 ] = 25;
+		beadArray[ 7 ] = 0;
+		beadArray[ 8 ] = 5;
+		beadArray[ 9 ] = 0;
+		beadArray[ 10 ] = 0;
+		beadArray[ 11 ] = 0;
+		beadArray[ 12 ] = 0;
+		beadArray[ 13 ] = 14;
 	}
 
 	/*
@@ -197,7 +256,6 @@ public class Mancala5AY
 			{
 				System.out.printf ( "   | " );
 			}
-
 		}
 		System.out.println ( );
 		System.out.println ( );
@@ -221,4 +279,7 @@ public class Mancala5AY
 	}
 }
 
-// Problems: None
+/* Problems: None that I can think of, though i feel like gameOverCheck is not written as expected. 
+ *           Turning in for some points(hopefully) and feedback. I did not email or call since you had the port installed today. 
+ *           Hope you are feeling OK.
+*/
