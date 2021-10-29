@@ -109,6 +109,7 @@ public class GuessingGameAY6 {
 		averageScore = totalScore / game; 
 		
 		System.out.println("With an average score of " + averageScore + " per game.");
+		input.close ( );
 	}
 
 }

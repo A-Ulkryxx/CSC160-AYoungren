@@ -1,27 +1,109 @@
+import java.util.Scanner;
+
 /* Austin Youngren
- * Mancala 6
- * 10/27/21
+ * Mancala 7
+ * 10/29/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
 public class Mancala6AY
 {
-	static final int NUM_BINS = 14;
+	static final int NUM_BINS = 14;// number of bins in the game
 
 	public static void main( String[ ] args )
 	{
 		int[ ] beadArray; //number of beads in each bin
-
+		int turnCount = 0;
+		//int binChoice;
 		beadArray = new int[ NUM_BINS ];
-
-		startingTestArray ( beadArray );
-		//startingArray ( beadArray );
-		printArray ( beadArray );
-		showBoard ( beadArray );
-		System.out.println ( gameOverCheck ( beadArray ) );
-		System.out.println ( );
-
+		//do {
+			//startingTestArray ( beadArray );
+			startingArray ( beadArray );
+			printArray ( beadArray );
+			showBoard ( beadArray );
+			getStartingBin ( beadArray, turnCount );
+			//binChoice = getStartingBin ( beadArray, turnCount );
+			//System.out.println ( binChoice);//tester
+			System.out.println ( gameOverCheck ( beadArray ) );
+		/*	if (gameOverCheck ( beadArray ) == -1)
+			{
+				turnCount++;
+			}
+			else if (gameOverCheck ( beadArray ) == 0)
+			{
+				System.out.print ( "The game is a tie." );
+			}
+			else if (gameOverCheck ( beadArray ) == 1)
+			{
+				System.out.print ( "Player 1 wins" );
+			}
+			else if (gameOverCheck ( beadArray ) == 2)
+			{
+				System.out.print ( "Player 2 wins." );
+			}
+			else {;}
+		*/
+		//}while (gameOverCheck ( beadArray ) == -1);
 	} // end of main
+
+		
+	public static int getStartingBin( int[ ] beadArray, int turnCount )
+	{
+		Scanner input;
+		input = new Scanner ( System.in );
+		int i; // LCV
+		if ((turnCount % 2) == 0)
+		{
+			do
+				{
+					System.out.println ( "Player 1, which bin would you like to start in? (0 - 5)" );
+					i = input.nextInt ( );
+					if (( i > 5 ) || ( i < 0 ) )
+					{
+						System.out.println ( "Invalid selection, please choose again." );
+					}
+					else
+					{
+						;
+					}
+					if ( beadArray[ i ] < 1 )
+					{
+						System.out.println ( "There are no beads in that bin, please choose another bin." );
+					}
+					else
+					{
+						;
+					}
+			} while ( ( i > 5 ) || ( i < 0 ) || ( beadArray[ i ] < 1 ) );
+		}
+		else
+		{
+				do
+					{
+						System.out.println ( "Player 2, which bin would you like to start in? (7 - 12)" );
+						i = input.nextInt ( );
+						if ( ( i > 12 ) || ( i < 7 ) )
+						{
+							System.out.println ( "Invalid selection, please choose again." );
+						}
+						else
+						{
+							;
+						}
+						if ( beadArray[ i ] < 1 )
+						{
+							System.out.println ( "There are no beads in that bin, please choose another bin." );
+						}
+						else
+						{
+							;
+						}
+					} while ( ( i > 12 ) || ( i < 7 ) || ( beadArray[ i ] < 1 ) );
+		}
+		input.close ( );
+		return i;
+	}
+	
 
 	/*
 	 * Description: Checks the remaining beads in top and bottom bins to decide if the game ends
@@ -30,13 +112,13 @@ public class Mancala6AY
 	 */
 	public static int gameOverCheck( int[ ] beadArray )
 	{
-		int winner;// game decision
+		int winner = -1;// game decision
 		int playerOne = 0; //beads on player one's side
 		int playerTwo = 0; //beads on player two's side
 		int i; //LCV
 		int j;//LCV
 
-			//for loops check respective player bins
+		//for loops check respective player bins
 		for ( i = 0; i < 6; i++ )
 		{
 			playerOne = playerOne + beadArray[ i ];
@@ -46,36 +128,32 @@ public class Mancala6AY
 			playerTwo = playerTwo + beadArray[ j ];
 		}
 
-			//decides which player is awarded left over beads
-		if ( ( playerOne == 0 ) && ( playerTwo != 0 ) )
-		{
-			beadArray[ 6 ] = beadArray[ 6 ] + playerTwo;
-		}
-		else if ( ( playerTwo == 0 ) && ( playerOne != 0 ) )
+		//checks  bins for winner
+		if ( ( playerOne == 0 ) || ( playerTwo == 0 ) )
 		{
 			beadArray[ 13 ] = beadArray[ 13 ] + playerOne;
+			beadArray[ 6 ] = beadArray[ 6 ] + playerTwo;
+
+			if ( beadArray[ 6 ] == beadArray[ 13 ] )
+			{
+				winner = 0;
+			}
+			else if ( beadArray[ 6 ] > beadArray[ 13 ] )
+			{
+				winner = 1;
+			}
+			else if ( beadArray[ 13 ] > beadArray[ 6 ] )
+			{
+				winner = 2;
+			}
+			else
+			{
+				;
+			}
 		}
 		else
 		{
 			;
-		}
-
-			//checks side bins for winner
-		if ( beadArray[ 6 ] == beadArray[ 13 ] )
-		{
-			winner = 0;
-		}
-		else if ( beadArray[ 6 ] > beadArray[ 13 ] )
-		{
-			winner = 1;
-		}
-		else if ( beadArray[ 13 ] > beadArray[ 6 ] )
-		{
-			winner = 2;
-		}
-		else
-		{
-			winner = -1;
 		}
 		return winner;
 	}//end of gameOverCheck
@@ -279,7 +357,4 @@ public class Mancala6AY
 	}
 }
 
-/* Problems: None that I can think of, though i feel like gameOverCheck is not written as expected. 
- *           Turning in for some points(hopefully) and feedback. I did not email or call since you had the port installed today. 
- *           Hope you are feeling OK.
-*/
+// Problems: None 
