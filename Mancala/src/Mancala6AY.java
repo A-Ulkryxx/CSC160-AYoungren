@@ -1,11 +1,11 @@
-import java.util.Scanner;
-
 /* Austin Youngren
  * Mancala 7
  * 10/29/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
+import java.util.Scanner;
+
 public class Mancala6AY
 {
 	static final int NUM_BINS = 14;// number of bins in the game
@@ -14,18 +14,15 @@ public class Mancala6AY
 	{
 		int[ ] beadArray; //number of beads in each bin
 		int turnCount = 0;
-		//int binChoice;
 		beadArray = new int[ NUM_BINS ];
-		//do {
-			//startingTestArray ( beadArray );
-			startingArray ( beadArray );
+		do {
+			startingTestArray ( beadArray );
+			//startingArray ( beadArray );
 			printArray ( beadArray );
 			showBoard ( beadArray );
 			getStartingBin ( beadArray, turnCount );
-			//binChoice = getStartingBin ( beadArray, turnCount );
-			//System.out.println ( binChoice);//tester
 			System.out.println ( gameOverCheck ( beadArray ) );
-		/*	if (gameOverCheck ( beadArray ) == -1)
+			if (gameOverCheck ( beadArray ) == -1)
 			{
 				turnCount++;
 			}
@@ -42,13 +39,14 @@ public class Mancala6AY
 				System.out.print ( "Player 2 wins." );
 			}
 			else {;}
-		*/
-		//}while (gameOverCheck ( beadArray ) == -1);
+		
+		}while (gameOverCheck ( beadArray ) == -1);
 	} // end of main
 
 		
 	public static int getStartingBin( int[ ] beadArray, int turnCount )
 	{
+		
 		Scanner input;
 		input = new Scanner ( System.in );
 		int i; // LCV
@@ -101,7 +99,7 @@ public class Mancala6AY
 					} while ( ( i > 12 ) || ( i < 7 ) || ( beadArray[ i ] < 1 ) );
 		}
 		input.close ( );
-		return i;
+		return beadArray[i];
 	}
 	
 
