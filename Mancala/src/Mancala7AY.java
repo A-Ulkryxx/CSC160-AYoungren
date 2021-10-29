@@ -1,3 +1,4 @@
+
 /* Austin Youngren
  * Mancala 7
  * 10/29/21
@@ -6,102 +7,74 @@
  */
 import java.util.Scanner;
 
-public class Mancala6AY
+public class Mancala7AY
 {
 	static final int NUM_BINS = 14;// number of bins in the game
+	static Scanner input;
 
 	public static void main( String[ ] args )
 	{
+		//Scanner input;
+		input = new Scanner ( System.in );
 		int[ ] beadArray; //number of beads in each bin
-		int turnCount = 0;
+		int player = 1; //which player, decides turn
+		int winner; //game decision
+		int bin; // testing bin return for getStartingBin
 		beadArray = new int[ NUM_BINS ];
-		do {
-			startingTestArray ( beadArray );
-			//startingArray ( beadArray );
-			printArray ( beadArray );
+
+		startingTestArray ( beadArray );
+		//startingArray ( beadArray );
+		printArray ( beadArray );
+		do
+		{
 			showBoard ( beadArray );
-			getStartingBin ( beadArray, turnCount );
-			System.out.println ( gameOverCheck ( beadArray ) );
-			if (gameOverCheck ( beadArray ) == -1)
-			{
-				turnCount++;
-			}
-			else if (gameOverCheck ( beadArray ) == 0)
-			{
-				System.out.print ( "The game is a tie." );
-			}
-			else if (gameOverCheck ( beadArray ) == 1)
-			{
-				System.out.print ( "Player 1 wins" );
-			}
-			else if (gameOverCheck ( beadArray ) == 2)
-			{
-				System.out.print ( "Player 2 wins." );
-			}
-			else {;}
-		
-		}while (gameOverCheck ( beadArray ) == -1);
+			//gameOverCheck(beadArray); //testing purposes, not in final code
+			bin = getStartingBin ( beadArray, player );
+			System.out.println ( bin ); // testing purposes, not final code
+			//dropBeads();
+			winner = gameOverCheck ( beadArray );
+			System.out.println ( winner );
+			player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
+		} while ( winner == -1 );
+		input.close ( );
 	} // end of main
 
-		
-	public static int getStartingBin( int[ ] beadArray, int turnCount )
+	/*
+	 * Description: Players select bin to start their turn
+	 * @param: beadArray - number of beads in each bin
+	 * @param: player - which bins can be chosen
+	 * @return: bin - the selected bin to start turn
+	 */
+	public static int getStartingBin( int[ ] beadArray, int player )
 	{
-		
-		Scanner input;
-		input = new Scanner ( System.in );
-		int i; // LCV
-		if ((turnCount % 2) == 0)
+		int bin; // LCV and bin decision
+		int highBin = 5; // condition variable - high range
+		int lowBin = 0; // condition variable - low range
+		if ( player == 2 )
 		{
-			do
-				{
-					System.out.println ( "Player 1, which bin would you like to start in? (0 - 5)" );
-					i = input.nextInt ( );
-					if (( i > 5 ) || ( i < 0 ) )
-					{
-						System.out.println ( "Invalid selection, please choose again." );
-					}
-					else
-					{
-						;
-					}
-					if ( beadArray[ i ] < 1 )
-					{
-						System.out.println ( "There are no beads in that bin, please choose another bin." );
-					}
-					else
-					{
-						;
-					}
-			} while ( ( i > 5 ) || ( i < 0 ) || ( beadArray[ i ] < 1 ) );
+			highBin = 12;
+			lowBin = 7;
 		}
 		else
 		{
-				do
-					{
-						System.out.println ( "Player 2, which bin would you like to start in? (7 - 12)" );
-						i = input.nextInt ( );
-						if ( ( i > 12 ) || ( i < 7 ) )
-						{
-							System.out.println ( "Invalid selection, please choose again." );
-						}
-						else
-						{
-							;
-						}
-						if ( beadArray[ i ] < 1 )
-						{
-							System.out.println ( "There are no beads in that bin, please choose another bin." );
-						}
-						else
-						{
-							;
-						}
-					} while ( ( i > 12 ) || ( i < 7 ) || ( beadArray[ i ] < 1 ) );
+			;
 		}
-		input.close ( );
-		return beadArray[i];
+		do
+		{
+			System.out.println (
+					"Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
+			bin = input.nextInt ( );
+			if ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) )
+			{
+				System.out.println ( "Invalid selection, please choose again." );
+			}
+			else
+			{
+				;
+			}
+		} while ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) );
+		return bin;
 	}
-	
 
 	/*
 	 * Description: Checks the remaining beads in top and bottom bins to decide if the game ends
@@ -113,35 +86,43 @@ public class Mancala6AY
 		int winner = -1;// game decision
 		int playerOne = 0; //beads on player one's side
 		int playerTwo = 0; //beads on player two's side
+		int tempPlayVal = 0; // holds a player bead value for transfer
 		int i; //LCV
-		int j;//LCV
 
 		//for loops check respective player bins
 		for ( i = 0; i < 6; i++ )
 		{
 			playerOne = playerOne + beadArray[ i ];
 		}
-		for ( j = 12; j > 6; j-- )
+		for ( i = 12; i > 6; i-- )
 		{
-			playerTwo = playerTwo + beadArray[ j ];
+			playerTwo = playerTwo + beadArray[ i ];
 		}
 
 		//checks  bins for winner
 		if ( ( playerOne == 0 ) || ( playerTwo == 0 ) )
 		{
-			beadArray[ 13 ] = beadArray[ 13 ] + playerOne;
-			beadArray[ 6 ] = beadArray[ 6 ] + playerTwo;
-
-			if ( beadArray[ 6 ] == beadArray[ 13 ] )
+			tempPlayVal = playerTwo;
+			playerTwo = beadArray[ 13 ] + playerOne;
+			playerOne = beadArray[ 6 ] + tempPlayVal;
+			beadArray[ 6 ] = 0;
+			beadArray[ 13 ] = 0;
+			if ( playerOne == playerTwo )
 			{
+				System.out
+						.println ( "Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Tie" );
 				winner = 0;
 			}
-			else if ( beadArray[ 6 ] > beadArray[ 13 ] )
+			else if ( playerOne > playerTwo )
 			{
+				System.out.println (
+						"Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Player 1 Wins" );
 				winner = 1;
 			}
-			else if ( beadArray[ 13 ] > beadArray[ 6 ] )
+			else if ( playerTwo > playerOne )
 			{
+				System.out.println (
+						"Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Player 2 Wins" );
 				winner = 2;
 			}
 			else
@@ -302,17 +283,17 @@ public class Mancala6AY
 	public static void startingTestArray( int[ ] beadArray )
 	{
 		beadArray[ 0 ] = 0;
-		beadArray[ 1 ] = 0;
+		beadArray[ 1 ] = 2;
 		beadArray[ 2 ] = 0;
 		beadArray[ 3 ] = 5;
-		beadArray[ 4 ] = 0;
+		beadArray[ 4 ] = 3;
 		beadArray[ 5 ] = 0;
-		beadArray[ 6 ] = 25;
+		beadArray[ 6 ] = 14;
 		beadArray[ 7 ] = 0;
-		beadArray[ 8 ] = 5;
-		beadArray[ 9 ] = 0;
+		beadArray[ 8 ] = 2;
+		beadArray[ 9 ] = 4;
 		beadArray[ 10 ] = 0;
-		beadArray[ 11 ] = 0;
+		beadArray[ 11 ] = 5;
 		beadArray[ 12 ] = 0;
 		beadArray[ 13 ] = 14;
 	}
