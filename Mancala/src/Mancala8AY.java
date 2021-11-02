@@ -1,7 +1,7 @@
 
 /* Austin Youngren
  * Mancala 8
- * 11/5/21
+ * 11/4/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
@@ -28,12 +28,10 @@ public class Mancala8AY
 		do
 		{
 			showBoard ( beadArray );
-			//System.out.println ( bin ); // testing purposes, not final code
 			winner = dropBeads( beadArray, player );
-			System.out.println ( winner );
-			gameOverCheck ( beadArray );
 			player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
 		} while ( winner == -1 );
+		showBoard ( beadArray ); //Shows empty board
 		input.close ( );
 	} // end of main
 
@@ -76,16 +74,16 @@ public class Mancala8AY
 	/*
 	 * Description: Player bead drops for turn, one is dropped in every following bin from selected.
 	 * @param: beadArray - number of beads in each bin
-	 * @param: player - who's turn it is and which bins can be chosen
+	 * @param: player - who's turn it is 
 	 * @return: winner - game decision
 	 */
 	public static int dropBeads(int[] beadArray, int player)
 	{
-		int opponentEndBin; //non-playable, opponent's, side bin
-		int playerEndBin; // current player's collection bin
+		int opponentEndBin; //opponent's, side bin:non-playable
+		int playerEndBin; // current player's side bin
 		int hand; //amount of beads in hand after pick up
 		int winner; // game decision 
-		int bin; //bins on the board
+		int bin; //selected bin & index variable
 		
 		opponentEndBin = 13; 
 		playerEndBin = 6;
@@ -116,7 +114,8 @@ public class Mancala8AY
 					beadArray[bin]++;
 					hand--;
 				}
-			}while (beadArray[bin] > 1);
+				
+			}while ((beadArray[bin] > 1) && (bin != playerEndBin));
 			winner = gameOverCheck ( beadArray );
 		}while ((bin == playerEndBin) && (winner == -1));
 		return winner;
@@ -132,7 +131,7 @@ public class Mancala8AY
 		int winner = -1;// game decision
 		int playerOne = 0; //beads on player one's side
 		int playerTwo = 0; //beads on player two's side
-		int tempPlayVal = 0; // holds a player bead value for transfer
+		int tempPlayVal = 0; // holds a player bead value for possible swap
 		int i; //LCV
 
 		//for loops check respective player bins
@@ -151,22 +150,26 @@ public class Mancala8AY
 			tempPlayVal = playerTwo;
 			playerTwo = beadArray[ 13 ] + playerOne;
 			playerOne = beadArray[ 6 ] + tempPlayVal;
-			beadArray[ 6 ] = 0;
-			beadArray[ 13 ] = 0;
+			
+			for ( i = 0; i < 14; i++ )
+			{
+				beadArray[ i ] = 0;
+			}
+			
 			if ( playerOne == playerTwo )
 			{
 				System.out
-						.println ( "Player 1 has " + playerOne + " points,\nand Player 2 has " + playerTwo + " points. Tie" );
+						.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nTie" );
 				winner = 0;
 			}
 			else if ( playerOne > playerTwo )
 			{
-				System.out.println ( "Player 1 has " + playerOne + " points, \n and Player 2 has " + playerTwo + " points. Player 1 Wins" );
+				System.out.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 1 Wins" );
 				winner = 1;
 			}
 			else if ( playerTwo > playerOne )
 			{
-				System.out.println ( "Player 1 has " + playerOne + " points,\n and Player 2 has " + playerTwo + " points. Player 2 Wins" );
+				System.out.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 2 Wins" );
 				winner = 2;
 			}
 			else
@@ -183,8 +186,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: Print out line of stars
-	 * @param numStars - Amount of stars to output in a line return type void
-	 * @return: None
+	 * @param numStars - Amount of stars for line output
+	 * @return: void
 	 */
 	public static void makeSolidLine( int numStars )
 	{
@@ -227,8 +230,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: produces the outline of the board
-	 * @param: beadArray (passes number of beads in each bin to various methods)
-	 * @return: None
+	 * @param: beadArray - number of beads in each bin)
+	 * @return: void
 	 */
 	public static void showBoard( int[ ] beadArray )
 	{
@@ -273,7 +276,7 @@ public class Mancala8AY
 	/*
 	 * Description: prints out bottom row of numbers
 	 * @param:None
-	 * @return: none
+	 * @return: void
 	 */
 	public static void showBottomeRowNumbers( )
 	{
@@ -289,8 +292,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: prints out array numbers for bins zero through five
-	 * @param: beadArray(number of beads in each top bin)
-	 * @return: none
+	 * @param: beadArray - number of beads in each bin
+	 * @return: void
 	 */
 	public static void showTopBins( int[ ] beadArray )
 	{
@@ -306,8 +309,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: prints out array numbers for bins six through thirteen
-	 * @param: beadArray (number of beads in each bottom and side bin)
-	 * @return: none
+	 * @param: beadArray - number of beads in each bin
+	 * @return: void
 	 */
 	public static void showBottomBins( int[ ] beadArray )
 	{
@@ -321,8 +324,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: initializes elements for testing/debugging purposes
-	 * @param: beadArray (tests number of beads in each bin)
-	 * @return: none
+	 * @param: beadArray - number of beads in each bin)
+	 * @return: void
 	 */
 	public static void startingTestArray( int[ ] beadArray )
 	{
@@ -330,22 +333,22 @@ public class Mancala8AY
 		beadArray[ 1 ] = 0;
 		beadArray[ 2 ] = 0;
 		beadArray[ 3 ] = 0;
-		beadArray[ 4 ] = 3;
-		beadArray[ 5 ] = 0;
+		beadArray[ 4 ] = 1;
+		beadArray[ 5 ] = 1;
 		beadArray[ 6 ] = 14;
 		beadArray[ 7 ] = 0;
 		beadArray[ 8 ] = 0;
-		beadArray[ 9 ] = 4;
+		beadArray[ 9 ] = 0;
 		beadArray[ 10 ] = 0;
-		beadArray[ 11 ] = 5;
-		beadArray[ 12 ] = 0;
+		beadArray[ 11 ] = 0;
+		beadArray[ 12 ] = 1;
 		beadArray[ 13 ] = 14;
 	}
 
 	/*
 	 * Description: prints the bead array in a line
-	 * @param: beadArray (number of beads in each bin)
-	 * @return: none
+	 * @param: beadArray - number of beads in each bin
+	 * @return: void
 	 */
 	public static void printArray( int[ ] beadArray )
 	{
@@ -364,8 +367,8 @@ public class Mancala8AY
 
 	/*
 	 * Description: initializes elements in beadArray
-	 * @param: beadArray(number of starting beads in each bin)
-	 * @return: none
+	 * @param: beadArray - number of beads in each bin)
+	 * @return: void
 	 */
 	public static void startingArray( int[ ] beadArray )
 	{
