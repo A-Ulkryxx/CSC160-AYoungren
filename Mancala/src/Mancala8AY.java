@@ -1,13 +1,13 @@
 
 /* Austin Youngren
- * Mancala 7
- * 10/29/21
+ * Mancala 8
+ * 11/5/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
 import java.util.Scanner;
 
-public class Mancala7AY
+public class Mancala8AY
 {
 	static final int NUM_BINS = 14;// number of bins in the game
 	static Scanner input;
@@ -19,7 +19,7 @@ public class Mancala7AY
 		int[ ] beadArray; //number of beads in each bin
 		int player = 1; //which player, decides turn
 		int winner; //game decision
-		int bin; // testing bin return for getStartingBin
+		
 		beadArray = new int[ NUM_BINS ];
 
 		startingTestArray ( beadArray );
@@ -28,12 +28,10 @@ public class Mancala7AY
 		do
 		{
 			showBoard ( beadArray );
-			//gameOverCheck(beadArray); //testing purposes, not in final code
-			bin = getStartingBin ( beadArray, player );
-			System.out.println ( bin ); // testing purposes, not final code
-			//dropBeads();
-			winner = gameOverCheck ( beadArray );
+			//System.out.println ( bin ); // testing purposes, not final code
+			winner = dropBeads( beadArray, player );
 			System.out.println ( winner );
+			gameOverCheck ( beadArray );
 			player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
 		} while ( winner == -1 );
 		input.close ( );
@@ -61,8 +59,7 @@ public class Mancala7AY
 		}
 		do
 		{
-			System.out.println (
-					"Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
+			System.out.println ( "Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
 			bin = input.nextInt ( );
 			if ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) )
 			{
@@ -75,7 +72,56 @@ public class Mancala7AY
 		} while ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) );
 		return bin;
 	}
-
+	
+	/*
+	 * Description: Player bead drops for turn, one is dropped in every following bin from selected.
+	 * @param: beadArray - number of beads in each bin
+	 * @param: player - who's turn it is and which bins can be chosen
+	 * @return: winner - game decision
+	 */
+	public static int dropBeads(int[] beadArray, int player)
+	{
+		int opponentEndBin; //non-playable, opponent's, side bin
+		int playerEndBin; // current player's collection bin
+		int hand; //amount of beads in hand after pick up
+		int winner; // game decision 
+		int bin; //bins on the board
+		
+		opponentEndBin = 13; 
+		playerEndBin = 6;
+		if (player == 2)
+		{
+			opponentEndBin =  6;
+			playerEndBin = 13;
+		}
+		
+		do
+		{
+			bin = getStartingBin(beadArray, player);
+			do 
+			{
+				hand = beadArray[bin];
+				beadArray[bin] = 0;
+				while(hand > 0)
+				{
+					bin++;
+					if (bin == opponentEndBin)
+					{
+						bin++;
+					}
+					if (bin > 13)
+					{
+						bin = 0;
+					}
+					beadArray[bin]++;
+					hand--;
+				}
+			}while (beadArray[bin] > 1);
+			winner = gameOverCheck ( beadArray );
+		}while ((bin == playerEndBin) && (winner == -1));
+		return winner;
+	}
+	
 	/*
 	 * Description: Checks the remaining beads in top and bottom bins to decide if the game ends
 	 * @param: beadArray - number of beads in each bin
@@ -110,19 +156,17 @@ public class Mancala7AY
 			if ( playerOne == playerTwo )
 			{
 				System.out
-						.println ( "Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Tie" );
+						.println ( "Player 1 has " + playerOne + " points,\nand Player 2 has " + playerTwo + " points. Tie" );
 				winner = 0;
 			}
 			else if ( playerOne > playerTwo )
 			{
-				System.out.println (
-						"Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Player 1 Wins" );
+				System.out.println ( "Player 1 has " + playerOne + " points, \n and Player 2 has " + playerTwo + " points. Player 1 Wins" );
 				winner = 1;
 			}
 			else if ( playerTwo > playerOne )
 			{
-				System.out.println (
-						"Player 1 has " + playerOne + " points, and Player 2 has " + playerTwo + " points. Player 2 Wins" );
+				System.out.println ( "Player 1 has " + playerOne + " points,\n and Player 2 has " + playerTwo + " points. Player 2 Wins" );
 				winner = 2;
 			}
 			else
@@ -283,14 +327,14 @@ public class Mancala7AY
 	public static void startingTestArray( int[ ] beadArray )
 	{
 		beadArray[ 0 ] = 0;
-		beadArray[ 1 ] = 2;
+		beadArray[ 1 ] = 0;
 		beadArray[ 2 ] = 0;
-		beadArray[ 3 ] = 5;
+		beadArray[ 3 ] = 0;
 		beadArray[ 4 ] = 3;
 		beadArray[ 5 ] = 0;
 		beadArray[ 6 ] = 14;
 		beadArray[ 7 ] = 0;
-		beadArray[ 8 ] = 2;
+		beadArray[ 8 ] = 0;
 		beadArray[ 9 ] = 4;
 		beadArray[ 10 ] = 0;
 		beadArray[ 11 ] = 5;
