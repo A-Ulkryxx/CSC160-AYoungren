@@ -1,13 +1,13 @@
 
 /* Austin Youngren
- * Mancala 8
+ * Mancala 9
  * 11/4/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
 import java.util.Scanner;
 
-public class Mancala8AY
+public class Mancala9AY
 {
 	static final int NUM_BINS = 14;// number of bins in the game
 	static Scanner input;
@@ -17,21 +17,27 @@ public class Mancala8AY
 		//Scanner input;
 		input = new Scanner ( System.in );
 		int[ ] beadArray; //number of beads in each bin
-		int player = 1; //which player, decides turn
+		int player; //which player, decides turn
 		int winner; //game decision
+		char newGame = 'y';
 		
-		beadArray = new int[ NUM_BINS ];
-
-		startingTestArray ( beadArray );
-		//startingArray ( beadArray );
-		printArray ( beadArray );
-		do
+		while (newGame == 'y') 
 		{
-			showBoard ( beadArray );
-			winner = dropBeads( beadArray, player );
-			player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
-		} while ( winner == -1 );
-		showBoard ( beadArray ); //Shows empty board
+			player = 1;
+			beadArray = new int[ NUM_BINS ];
+			startingTestArray ( beadArray );
+			//startingArray ( beadArray );
+			printArray ( beadArray );
+			do
+			{
+				showBoard ( beadArray );
+				winner = dropBeads( beadArray, player );
+				player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
+			} while ( winner == -1 );
+			showBoard ( beadArray ); //Shows empty board
+			System.out.println("Would you like to play again? (y/n)");
+			newGame = input.next().charAt(0);
+		}
 		input.close ( );
 	} // end of main
 
@@ -155,6 +161,9 @@ public class Mancala8AY
 			{
 				beadArray[ i ] = 0;
 			}
+			
+			beadArray[6] = playerOne;
+			beadArray[13] = playerTwo;
 			
 			if ( playerOne == playerTwo )
 			{
