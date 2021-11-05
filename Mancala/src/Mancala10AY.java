@@ -1,57 +1,111 @@
 
 /* Austin Youngren
- * Mancala 9
- * 11/4/21
+ * Mancala 10
+ * 11/8/21
  * The game of Mancala, a game played by two people by moving beads around a board.
  *  The person with the most beads at the end of the game wins.
  */
 import java.util.Scanner;
 
-public class Mancala9AY
+public class Mancala10AY
 {
 	static final int NUM_BINS = 14;// number of bins in the game
 	static Scanner input;
 
 	public static void main( String[ ] args )
 	{
-		//Scanner input;
+				//Scanner input;
 		input = new Scanner ( System.in );
 		int[ ] beadArray; //number of beads in each bin
-		int player; //which player, decides turn
-		int winner; //game decision
+		int player; //which player, decides who's turn it is
+		int winner; //game decision - Player 1 win, Player 2 Win, Tie, or continue playing
+		int compPlayer; // activation of the computer opponent
 		char newGame = 'y';
-		
-		while (newGame == 'y') 
+
+		while ( newGame == 'y' )
 		{
 			player = 1;
+			System.out.println("Would you like to play against the computer? (y/n)");
+			compPlayer = input.next ( ).charAt ( 0 );
+			
 			beadArray = new int[ NUM_BINS ];
-			startingTestArray ( beadArray );
-			//startingArray ( beadArray );
+			//startingTestArray ( beadArray );
+			startingArray ( beadArray );
 			printArray ( beadArray );
 			do
 			{
-				showBoard ( beadArray );
-				winner = dropBeads( beadArray, player );
+				winner = dropBeads ( beadArray, player, compPlayer );
 				player = ( player % 2 ) + 1; // alternates player: 1 % 2 + 1 = 2 or 2 % 2 + 1 = 1
 			} while ( winner == -1 );
 			showBoard ( beadArray ); //Shows empty board
-			System.out.println("Would you like to play again? (y/n)");
-			newGame = input.next().charAt(0);
+			System.out.println ( "Would you like to play again? (y/n)" );
+			newGame = input.next ( ).charAt ( 0 );
 		}
 		input.close ( );
 	} // end of main
 
 	/*
-	 * Description: Players select bin to start their turn
-	 * @param: beadArray - number of beads in each bin
-	 * @param: player - which bins can be chosen
-	 * @return: bin - the selected bin to start turn
+	 * Description:When user decides to play a computer, this method generates the computer choices as player 2
+	 * @param: beadArray - number of beads in each bin 
+	 * @return: bin - the selected bin to start or continue turn
 	 */
-	public static int getStartingBin( int[ ] beadArray, int player )
+	public static int compPlayer(int[ ] beadArray)
 	{
-		int bin; // LCV and bin decision
-		int highBin = 5; // condition variable - high range
-		int lowBin = 0; // condition variable - low range
+		int bin = 0; //Computer's bin choice
+		int i; //LCV
+		
+		if (beadArray[12] == 1)
+		{
+			bin = 12;
+		}
+		else if (beadArray[11] == 2)
+		{
+			bin = 11;
+		}
+		else if (beadArray[10] == 3)
+		{
+			bin = 10; 
+		}
+		else if (beadArray[9] == 4)
+		{
+			bin = 9;
+		}
+		else if (beadArray[8] == 5)
+		{
+			bin = 8;
+		}
+		else if (beadArray[7] == 4)
+		{
+			bin = 7;
+		}
+		else
+		{
+			for (i = 12; i > 6; i--)
+			{
+				if (beadArray[i] > bin)
+				{
+					bin = i;
+				}
+				else {;}
+			}
+		}
+		return bin;
+	}
+	
+	/*
+	 * Description: Players select bin to start or continue their turn. 
+	 * 				depending on the value of player decided which bins can be chosen
+	 * @param: beadArray - number of beads in each bin
+	 * @param: player - which bins can be chosen/ who's turn it is
+	 * @param: compPlayer - if user has chosen to play against a computer, 
+	 * 							allows computer to make bin choice
+	 * @return: bin - the selected bin to start or continue turn
+	 */
+	public static int getStartingBin( int[ ] beadArray, int player, int compPlayer )
+	{
+		int bin; // LCV and player's choice of bin
+		int highBin = 5; // condition variable - high range of the bin that can be selected
+		int lowBin = 0; // condition variable - low range of the bin that can be selected
 		if ( player == 2 )
 		{
 			highBin = 12;
@@ -61,13 +115,25 @@ public class Mancala9AY
 		{
 			;
 		}
+		
 		do
 		{
-			System.out.println ( "Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
+			showBoard ( beadArray );
+			System.out.println (
+					"Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
+			if ((compPlayer == 'y') && (player == 2))
+			{
+			bin = compPlayer(beadArray);	
+			}
+			else
+			{
 			bin = input.nextInt ( );
+			}
+					//Shows the bin decision after selection - helps test computer function
+			System.out.println ( bin + " was selected.");	
 			if ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) )
 			{
-				System.out.println ( "Invalid selection, please choose again." );
+				System.out.println ( "Invalid selection, please choose again." + bin);
 			}
 			else
 			{
@@ -76,57 +142,61 @@ public class Mancala9AY
 		} while ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) );
 		return bin;
 	}
-	
+
 	/*
-	 * Description: Player bead drops for turn, one is dropped in every following bin from selected.
+	 * Description: Picks up beads from selected bins and allows distribution.
+	 * 				if player lands in their side bin, player chooses bin before
+	 * 				passing their turn.
 	 * @param: beadArray - number of beads in each bin
-	 * @param: player - who's turn it is 
-	 * @return: winner - game decision
+	 * @param: player - who's turn it is
+	 * @param: compPlayer - if user has chosen to play against a computer, 
+	 * 							allows computer to make bin choice
+	 * @return: winner - game ending outcome (player win(1 or 2), tie(0), or keep playing(-1)
 	 */
-	public static int dropBeads(int[] beadArray, int player)
+	public static int dropBeads( int[ ] beadArray, int player, int compPlayer )
 	{
-		int opponentEndBin; //opponent's, side bin:non-playable
-		int playerEndBin; // current player's side bin
-		int hand; //amount of beads in hand after pick up
-		int winner; // game decision 
-		int bin; //selected bin & index variable
-		
-		opponentEndBin = 13; 
+		int opponentEndBin; //opponent's side bin: non-playable bin for current player
+		int playerEndBin; // current player's side bin - bin holding players current score
+		int hand; //amount of beads in hand after picking up from a bin
+		int winner; // game decision - Player 1 win, Player 2 Win, Tie, or continue playing
+		int bin; //player's selected bin & beadArray index variable
+
+		opponentEndBin = 13;
 		playerEndBin = 6;
-		if (player == 2)
+		if ( player == 2 )
 		{
-			opponentEndBin =  6;
+			opponentEndBin = 6;
 			playerEndBin = 13;
 		}
-		
+
 		do
 		{
-			bin = getStartingBin(beadArray, player);
-			do 
+			bin = getStartingBin ( beadArray, player, compPlayer );
+			do
 			{
-				hand = beadArray[bin];
-				beadArray[bin] = 0;
-				while(hand > 0)
+				hand = beadArray[ bin ];
+				beadArray[ bin ] = 0;
+				while ( hand > 0 )
 				{
 					bin++;
-					if (bin == opponentEndBin)
+					if ( bin == opponentEndBin )
 					{
 						bin++;
 					}
-					if (bin > 13)
+					if ( bin > 13 )
 					{
 						bin = 0;
 					}
-					beadArray[bin]++;
+					beadArray[ bin ]++;
 					hand--;
 				}
-				
-			}while ((beadArray[bin] > 1) && (bin != playerEndBin));
+
+			} while ( ( beadArray[ bin ] > 1 ) && ( bin != playerEndBin ) );
 			winner = gameOverCheck ( beadArray );
-		}while ((bin == playerEndBin) && (winner == -1));
+		} while ( ( bin == playerEndBin ) && ( winner == -1 ) );
 		return winner;
 	}
-	
+
 	/*
 	 * Description: Checks the remaining beads in top and bottom bins to decide if the game ends
 	 * @param: beadArray - number of beads in each bin
@@ -134,13 +204,13 @@ public class Mancala9AY
 	 */
 	public static int gameOverCheck( int[ ] beadArray )
 	{
-		int winner = -1;// game decision
-		int playerOne = 0; //beads on player one's side
-		int playerTwo = 0; //beads on player two's side
-		int tempPlayVal = 0; // holds a player bead value for possible swap
+		int winner = -1;// game decision - Player 1 win, Player 2 Win, Tie, or continue playing
+		int playerOne = 0; //collective beads on player one's side, side bins not included
+		int playerTwo = 0; //collective beads on player two's side, side bins not included
+		int tempPlayVal = 0; // holds playerTwo bead value for possible swap when deciding winner
 		int i; //LCV
 
-		//for loops check respective player bins
+				//for loops check respective player bins
 		for ( i = 0; i < 6; i++ )
 		{
 			playerOne = playerOne + beadArray[ i ];
@@ -150,35 +220,36 @@ public class Mancala9AY
 			playerTwo = playerTwo + beadArray[ i ];
 		}
 
-		//checks  bins for winner
+				//checks  bins for winner
 		if ( ( playerOne == 0 ) || ( playerTwo == 0 ) )
 		{
 			tempPlayVal = playerTwo;
 			playerTwo = beadArray[ 13 ] + playerOne;
 			playerOne = beadArray[ 6 ] + tempPlayVal;
-			
+
 			for ( i = 0; i < 14; i++ )
 			{
 				beadArray[ i ] = 0;
 			}
-			
-			beadArray[6] = playerOne;
-			beadArray[13] = playerTwo;
-			
+
+			beadArray[ 6 ] = playerOne;
+			beadArray[ 13 ] = playerTwo;
+
 			if ( playerOne == playerTwo )
 			{
-				System.out
-						.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nTie" );
+				System.out.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nTie" );
 				winner = 0;
 			}
 			else if ( playerOne > playerTwo )
 			{
-				System.out.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 1 Wins" );
+				System.out.println (
+						"Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 1 Wins" );
 				winner = 1;
 			}
 			else if ( playerTwo > playerOne )
 			{
-				System.out.println ( "Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 2 Wins" );
+				System.out.println (
+						"Player 1 has " + playerOne + " score\nPlayer 2 has " + playerTwo + " score\nPlayer 2 Wins" );
 				winner = 2;
 			}
 			else
@@ -194,7 +265,7 @@ public class Mancala9AY
 	}//end of gameOverCheck
 
 	/*
-	 * Description: Print out line of stars
+	 * Description: Prints out line of stars
 	 * @param numStars - Amount of stars for line output
 	 * @return: void
 	 */
@@ -272,7 +343,7 @@ public class Mancala9AY
 	 */
 	public static void showTopRowNumbers( )
 	{
-		int topNums = 0; // number within columns of top row
+		int topNums = 0; // the bin number within columns of top row
 		System.out.print ( "*      " );
 		while ( topNums < 6 )
 		{
@@ -289,7 +360,7 @@ public class Mancala9AY
 	 */
 	public static void showBottomeRowNumbers( )
 	{
-		int bottomNums = 12;//number within columns of bottom row
+		int bottomNums = 12;		//the bin number within columns of bottom row
 		System.out.print ( "*      " );
 		while ( bottomNums > 6 )
 		{
@@ -314,7 +385,7 @@ public class Mancala9AY
 
 		}
 		System.out.println ( "*      *" );
-	}// end of showTopBins
+	}		// end of showTopBins
 
 	/*
 	 * Description: prints out array numbers for bins six through thirteen
@@ -329,7 +400,7 @@ public class Mancala9AY
 			System.out.printf ( "*%4d  ", beadArray[ i ] );
 		}
 		System.out.println ( "*" );
-	}// end of showBottomBins
+	}		// end of showBottomBins
 
 	/*
 	 * Description: initializes elements for testing/debugging purposes
