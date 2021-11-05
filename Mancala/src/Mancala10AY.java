@@ -25,9 +25,9 @@ public class Mancala10AY
 		while ( newGame == 'y' )
 		{
 			player = 1;
-			System.out.println("Would you like to play against the computer? (y/n)");
+			System.out.println ( "Would you like to play against the computer? (y/n)" );
 			compPlayer = input.next ( ).charAt ( 0 );
-			
+
 			beadArray = new int[ NUM_BINS ];
 			//startingTestArray ( beadArray );
 			startingArray ( beadArray );
@@ -46,59 +46,61 @@ public class Mancala10AY
 
 	/*
 	 * Description:When user decides to play a computer, this method generates the computer choices as player 2
-	 * @param: beadArray - number of beads in each bin 
+	 * @param: beadArray - number of beads in each bin
 	 * @return: bin - the selected bin to start or continue turn
 	 */
-	public static int compPlayer(int[ ] beadArray)
+	public static int compPlayer( int[ ] beadArray )
 	{
 		int bin = 0; //Computer's bin choice
 		int i; //LCV
-		
-		if (beadArray[12] == 1)
+
+		if ( beadArray[ 12 ] == 1 )
 		{
 			bin = 12;
 		}
-		else if (beadArray[11] == 2)
+		else if ( beadArray[ 11 ] == 2 )
 		{
 			bin = 11;
 		}
-		else if (beadArray[10] == 3)
+		else if ( beadArray[ 10 ] == 3 )
 		{
-			bin = 10; 
+			bin = 10;
 		}
-		else if (beadArray[9] == 4)
+		else if ( beadArray[ 9 ] == 4 )
 		{
 			bin = 9;
 		}
-		else if (beadArray[8] == 5)
+		else if ( beadArray[ 8 ] == 5 )
 		{
 			bin = 8;
 		}
-		else if (beadArray[7] == 4)
+		else if ( beadArray[ 7 ] == 4 )
 		{
 			bin = 7;
 		}
 		else
 		{
-			for (i = 12; i > 6; i--)
+			for ( i = 12; i > 6; i-- )
 			{
-				if (beadArray[i] > bin)
+				if ( beadArray[ i ] > bin )
 				{
 					bin = i;
 				}
-				else {;}
+				else
+				{
+					;
+				}
 			}
 		}
 		return bin;
 	}
-	
+
 	/*
-	 * Description: Players select bin to start or continue their turn. 
-	 * 				depending on the value of player decided which bins can be chosen
+	 * Description: Players select bin to start or continue their turn. depending on the value of player decided which
+	 * bins can be chosen
 	 * @param: beadArray - number of beads in each bin
 	 * @param: player - which bins can be chosen/ who's turn it is
-	 * @param: compPlayer - if user has chosen to play against a computer, 
-	 * 							allows computer to make bin choice
+	 * @param: compPlayer - if user has chosen to play against a computer, allows computer to make bin choice
 	 * @return: bin - the selected bin to start or continue turn
 	 */
 	public static int getStartingBin( int[ ] beadArray, int player, int compPlayer )
@@ -115,25 +117,25 @@ public class Mancala10AY
 		{
 			;
 		}
-		
+
 		do
 		{
 			showBoard ( beadArray );
 			System.out.println (
 					"Player " + player + ", which bin would you like to start in? (" + lowBin + " - " + highBin + ")" );
-			if ((compPlayer == 'y') && (player == 2))
+			if ( ( compPlayer == 'y' ) && ( player == 2 ) )
 			{
-			bin = compPlayer(beadArray);	
+				bin = compPlayer ( beadArray );
 			}
 			else
 			{
-			bin = input.nextInt ( );
+				bin = input.nextInt ( );
 			}
 					//Shows the bin decision after selection - helps test computer function
-			System.out.println ( bin + " was selected.");	
+			System.out.println ( bin + " was selected." );
 			if ( ( bin > highBin ) || ( bin < lowBin ) || ( beadArray[ bin ] < 1 ) )
 			{
-				System.out.println ( "Invalid selection, please choose again." + bin);
+				System.out.println ( "Invalid selection, please choose again." + bin );
 			}
 			else
 			{
@@ -144,13 +146,11 @@ public class Mancala10AY
 	}
 
 	/*
-	 * Description: Picks up beads from selected bins and allows distribution.
-	 * 				if player lands in their side bin, player chooses bin before
-	 * 				passing their turn.
+	 * Description: Picks up beads from selected bins and allows distribution. if player lands in their side bin, player
+	 * chooses bin before passing their turn.
 	 * @param: beadArray - number of beads in each bin
 	 * @param: player - who's turn it is
-	 * @param: compPlayer - if user has chosen to play against a computer, 
-	 * 							allows computer to make bin choice
+	 * @param: compPlayer - if user has chosen to play against a computer, allows computer to make bin choice
 	 * @return: winner - game ending outcome (player win(1 or 2), tie(0), or keep playing(-1)
 	 */
 	public static int dropBeads( int[ ] beadArray, int player, int compPlayer )
