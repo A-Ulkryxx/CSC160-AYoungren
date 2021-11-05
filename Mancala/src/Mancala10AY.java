@@ -74,7 +74,7 @@ public class Mancala10AY
 		{
 			bin = 8;
 		}
-		else if ( beadArray[ 7 ] == 4 )
+		else if ( beadArray[ 7 ] == 6 )
 		{
 			bin = 7;
 		}
