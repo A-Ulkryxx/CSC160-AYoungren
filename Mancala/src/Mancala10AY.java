@@ -52,9 +52,10 @@ public class Mancala10AY
 	public static int compPlayer( int[ ] beadArray )
 	{
 		int bin = 0; //Computer's bin choice
+		int highestBeads; //the highest amount of beads in bin options
 		int i; //LCV
 
-		if ( beadArray[ 12 ] == 1 )
+		if ( beadArray[ 12 ] == 1 ) //if the 12th bin contains 1 bead, priority choice.
 		{
 			bin = 12;
 		}
@@ -78,12 +79,18 @@ public class Mancala10AY
 		{
 			bin = 7;
 		}
-		else
+				/* if none of the above conditions are true, 
+				 * the bot will choose the first bin with the highest amount of beads.
+				 */
+		else   
 		{
+			highestBeads = beadArray[12];
+			bin = 12;
 			for ( i = 12; i > 6; i-- )
 			{
-				if ( beadArray[ i ] > bin )
+				if ( beadArray[ i ] >= highestBeads )
 				{
+					highestBeads = beadArray[i];
 					bin = i;
 				}
 				else
