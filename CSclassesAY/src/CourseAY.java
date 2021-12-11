@@ -27,6 +27,20 @@ public class CourseAY
 		this.credits = credits;
 	}
 
+	public String checkStudentsInClass()
+	{
+		String retVal;
+		if ( numStudents > maxStudents)
+		{
+			retVal = "Students exceed the maximum allowed in class.";
+		}
+		else
+		{
+			retVal = "Class size is ok";
+		}
+		return retVal;
+	}
+	
 	public String getCourseNumber( )
 	{
 		return courseNumber;
@@ -83,6 +97,4 @@ public class CourseAY
 		return "CourseAY [\ncourseNumber=" + courseNumber + ", \nnumStudents=" + numStudents + ", \nmaxStudents=" + maxStudents
 				+ ",\nroom=" + room + ",\n credits=" + credits + "\n]";
 	}
-	
-	
 }
